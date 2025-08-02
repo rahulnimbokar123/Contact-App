@@ -35,6 +35,7 @@ public class Contact {
     private String phoneNumber;
     private String address;
     private String picture;
+    private String about;
     private String description;
     private boolean favourite=false;
     private String website;

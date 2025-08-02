@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.web.WebProperties.Resources.Chain.
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,7 +45,7 @@ public class User {
     private boolean phoneVarified = false;
 
     // self, fb,google,twitter,linked , github
-
+@Enumerated(value = EnumType.STRING)
     private Providers provider = Providers.SELF;
     private String provideruserId;
 

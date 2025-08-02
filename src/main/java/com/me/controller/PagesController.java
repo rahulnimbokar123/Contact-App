@@ -1,17 +1,24 @@
 package com.me.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import com.me.entity.User;
+import com.me.form.UserForm;
+import com.me.service.UserService;
+
+ 
 
 @Controller
 public class PagesController {
+
+    @Autowired
+    private UserService service;
 
     @RequestMapping("/home")
     public String home(Model model){
@@ -49,14 +56,38 @@ public class PagesController {
     }
 
     @GetMapping("/register")
-    public String register(){
-        System.out.println("register");
+    public String register(Model model){
+        UserForm userForm= new UserForm();
+model.addAttribute("userForm", userForm);
+
+        //System.out.println("register");
        return  "register";
     }
     
     //processing register
      @RequestMapping(value = "/do-register",method = RequestMethod.POST)
-public String processRegister(){
+public String processRegister(@ModelAttribute UserForm userForm){
+
+    //save user to db
+    //userfrom convert to user
+    ///User user=User.builder()
+    //.name(userForm.getName())
+    //.email(userForm.getEmail())
+    //.password(userForm.getPassword())
+    //.about(userForm.getAbout())
+    //.phoneNumber(userForm.getPhoneNumber())
+//.ProfilePic("D:\\Contact\\Contact-App\\src\\main\\resources\\static\\image\\profile.jpg")
+   // .build();
+
+   User users = new User();
+   users.setName(userForm.getName());
+       users.setEmail(userForm.getEmail());
+       users.setAbout(userForm.getAbout());
+       users.setPassword(userForm.getPassword());
+       users.setPhoneNumber(userForm.getPhoneNumber());
+       users.setProfilePic("D:\\\\Contact\\\\Contact-App\\\\src\\\\main\\\\resources\\\\static\\\\image\\\\profile.jpg");
+        
+    User saveUser =service.saveUser(users);
 
     return "redirect:/register";
 }
